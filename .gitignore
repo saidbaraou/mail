@@ -1,0 +1,27 @@
+# Python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+/venv/
+/env/
+.venv/
+
+# Django/Web Specific
+db.sqlite3
+/media/
+/static_cdn/
+/staticfiles/
+
+# Security & Local Config
+.env
+local_settings.py
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Deployment logs
+*.log
