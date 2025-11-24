@@ -39,5 +39,16 @@ function send_email(event) {
   const subject = document.querySelector('#compose-subject');
   const body = document.querySelector('#compose-body');
 
-  
+  fetch('/emails', {
+    method: 'POST',
+    body: JSON.stringify({
+      recipients: recipients,
+      subject: subject,
+      body: body,
+    })
+  })
+  .then(reponse => response.json())
+  .then(mailSent => {
+    console.log(mailSent);
+  })
 }
