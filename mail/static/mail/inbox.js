@@ -42,7 +42,7 @@ function get_emails(mailbox) {
     console.log(emails)
   })
   .catch(error => {
-    console.error('Error getting the mails', error)
+    console.error('Error : Cannot get the mails', error)
   })
 
 }
