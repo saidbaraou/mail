@@ -35,6 +35,20 @@ function load_mailbox(mailbox) {
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
 }
 
+function get_emails(mailbox) {
+  fetch(`/emails/${mailbox}`)
+  .then(response => response.json())
+  .then(emails => {
+    console.log(emails)
+  })
+  .catch(error => {
+    console.error('Error getting the mails', error)
+  })
+
+}
+
+
+
 function send_email(event) {
   event.preventDefault()
 
