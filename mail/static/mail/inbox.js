@@ -33,13 +33,16 @@ function load_mailbox(mailbox) {
 
   // Show the mailbox name
   document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+
 }
 
 function get_emails(mailbox) {
+
+  //fetch emails accordingly to the mailbox requested 
   fetch(`/emails/${mailbox}`)
   .then(response => response.json())
   .then(emails => {
-    console.log(emails)
+    return emails 
   })
   .catch(error => {
     console.error('Error : Cannot get the mails', error)
@@ -50,12 +53,15 @@ function get_emails(mailbox) {
 
 
 function send_email(event) {
+
   event.preventDefault()
 
+  //Getting the value of different fields
   const recipients = document.querySelector('#compose-recipients').value;
   const subject = document.querySelector('#compose-subject').value;
   const body = document.querySelector('#compose-body').value;
 
+  //Send the fields data to the server
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
