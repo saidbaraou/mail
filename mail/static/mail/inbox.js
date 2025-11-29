@@ -45,7 +45,7 @@ function get_emails(mailbox) {
     return emails 
   })
   .catch(error => {
-    console.error('Error : Cannot get the mails', error)
+    console.error('Cannot get the mail:', error)
   })
 
 }
@@ -77,7 +77,7 @@ function send_email(event) {
      load_mailbox('sent');
   })
   .catch(error => {
-    console.error('Error sending email', error);
+    console.error('Sending mail failed:', error);
   })
 
 }
