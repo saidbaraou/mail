@@ -46,14 +46,21 @@ function load_mailbox(mailbox) {
 
 const get_emails = function (mailbox) {
 
-  const emailListContainer = document.querySelector('#email-list-container');
-
   //fetch emails accordingly to the mailbox requested 
   fetch(`/emails/${mailbox}`)
   .then(response => response.json())
   .then(emails => {
 
     console.log(emails); 
+
+    //Create the element inside the ASYNC block, to be sure the element had time to be added to the DOM
+     const emailListContainer = document.querySelector('#email-list-container');
+
+     //To check the element had arrived
+     if(!emailListContainer){
+      console.log('No list container found');
+      return
+     }
 
     //Checking wether response is an array before looping, displaying a message and stoping the function execution
     if(!Array.isArray(emails) || emails.length == 0) {
@@ -66,10 +73,12 @@ const get_emails = function (mailbox) {
     //Populate an emailDiv with every mail object property
       emails.forEach(email => {
       const emailDiv = document.createElement('div');
+      const allRecipients = email.recipients.join(', ')
 
       emailDiv.innerHTML = `
         <p>${email.id}</p>
-        <p>Recipient:${email.recipient}</p>
+        
+        <p>Recipient: ${allRecipients}</p>
         <p>Subject:${email.subject}</p>
         <p>Timestamp${email.timestamp}</p>    
       `;
