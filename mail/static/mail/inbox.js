@@ -26,30 +26,63 @@ function compose_email() {
 }
 
 function load_mailbox(mailbox) {
+
+  const emailsView = document.querySelector('#emails-view');
+  const composeView = document.querySelector('#compose-view');
   
   // Show the mailbox and hide other views
-  document.querySelector('#emails-view').style.display = 'block';
-  document.querySelector('#compose-view').style.display = 'none';
+  emailsView.style.display = 'block';
+  composeView.style.display = 'none';
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  emailsView.innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>
+  <div id="email-list-container"></div>
+  `;
+  
+
+  get_emails(mailbox);
 
 }
 
-function get_emails(mailbox) {
+const get_emails = function (mailbox) {
+
+  const emailListContainer = document.querySelector('#email-list-container');
 
   //fetch emails accordingly to the mailbox requested 
   fetch(`/emails/${mailbox}`)
   .then(response => response.json())
   .then(emails => {
-    return emails 
+
+    console.log(emails); 
+
+    //Checking wether response is an array before looping, displaying a message and stoping the function execution
+    if(!Array.isArray(emails) || emails.length == 0) {
+      const emptyMessage = document.createElement('p');
+      emptyMessage.textContent = `No mail found in ${mailbox} mails`;
+      emailListContainer.appendChild(emptyMessage);
+      return
+    }
+
+    //Populate an emailDiv with every mail object property
+      emails.forEach(email => {
+      const emailDiv = document.createElement('div');
+
+      emailDiv.innerHTML = `
+        <p>${email.id}</p>
+        <p>Recipient:${email.recipient}</p>
+        <p>Subject:${email.subject}</p>
+        <p>Timestamp${email.timestamp}</p>    
+      `;
+
+      emailListContainer.appendChild(emailDiv)
+    })
   })
+  
   .catch(error => {
     console.error('Cannot get the mail:', error)
   })
 
 }
-
 
 
 function send_email(event) {
