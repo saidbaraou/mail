@@ -73,14 +73,14 @@ const get_emails = function (mailbox) {
     //Populate an emailDiv with every mail object property
       emails.forEach(email => {
       const emailDiv = document.createElement('div');
-      const allRecipients = email.recipients.join(', ')
+      const allRecipients = email.recipients.join(', ');
 
-      emailDiv.innerHTML = `
-        <p>${email.id}</p>
-        
-        <p>Recipient: ${allRecipients}</p>
-        <p>Subject:${email.subject}</p>
-        <p>Timestamp${email.timestamp}</p>    
+      emailDiv.className = 'email-item';
+
+      emailDiv.innerHTML = ` 
+        <p><strong>From: ${allRecipients}</strong></p>
+        <p><strong>Subject: ${email.subject}</strong></p>
+        <small class='text-secondary'>${email.timestamp}</small>    
       `;
 
       emailListContainer.appendChild(emailDiv)

@@ -1,3 +1,14 @@
 textarea {
     min-height: 400px;
 }
+
+.email-item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: .5rem;
+    margin: 2rem 0;
+    cursor: pointer;
+}
+
+/* .read-email-item {
+    background-color: #f0f0f0;
+} */
