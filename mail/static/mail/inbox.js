@@ -70,9 +70,11 @@ const get_emails = function (mailbox) {
       return
     }
 
+    '<ul>'
     //Populate an emailDiv with every mail object property
       emails.forEach(email => {
       const emailDiv = document.createElement('div');
+      emailDiv.setAttribute('data-key', email.id)
       const allRecipients = email.recipients.join(', ');
 
       emailDiv.className = 'email-item';
@@ -85,6 +87,7 @@ const get_emails = function (mailbox) {
 
       emailListContainer.appendChild(emailDiv)
     })
+    '</ul>'
   })
   
   .catch(error => {
