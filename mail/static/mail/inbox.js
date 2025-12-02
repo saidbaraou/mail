@@ -65,7 +65,7 @@ const get_emails = function (mailbox) {
     //Checking wether response is an array before looping, displaying a message and stoping the function execution
     if(!Array.isArray(emails) || emails.length == 0) {
       const emptyMessage = document.createElement('p');
-      emptyMessage.textContent = `No mail found in ${mailbox} mails`;
+      emptyMessage.textContent = `No mail found`;
       emailListContainer.appendChild(emptyMessage);
       return
     }
