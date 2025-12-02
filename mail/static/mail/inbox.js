@@ -70,11 +70,13 @@ const get_emails = function (mailbox) {
       return
     }
 
-    '<ul>'
     //Populate an emailDiv with every mail object property
       emails.forEach(email => {
       const emailDiv = document.createElement('div');
+
+    //Add dataset attribute to be able to retrieve them  by their uniqueness
       emailDiv.setAttribute('data-key', email.id)
+
       const allRecipients = email.recipients.join(', ');
 
       emailDiv.className = 'email-item';
@@ -86,14 +88,22 @@ const get_emails = function (mailbox) {
       `;
 
       emailListContainer.appendChild(emailDiv)
+
+      //Attached an event listener to each mail to view it when clicked on  
+      emailDiv.addEventListener('click', () => view_email())
     })
-    '</ul>'
+
   })
   
   .catch(error => {
     console.error('Cannot get the mail:', error)
   })
 
+}
+
+function view_email(event) {
+  
+  
 }
 
 
