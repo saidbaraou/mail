@@ -81,9 +81,19 @@ const get_emails = function (mailbox) {
 
       emailDiv.className = 'email-item';
 
+      let role;
+      const sent_mail = `To : ${allRecipients}`
+      const received_mail = `From : ${email.sender}`
+
+      if (mailbox === 'inbox') {
+        role = received_mail;
+      } else if (mailbox === 'sent') {
+        role = sent_mail
+      }
+
       emailDiv.innerHTML = ` 
-        <p><strong>From: ${allRecipients}</strong></p>
-        <p><strong>Subject: ${email.subject}</strong></p>
+        <p><strong>${role}</strong></p>
+        <p><strong>Subject : ${email.subject}</strong></p>
         <small class='text-secondary'>${email.timestamp}</small>    
       `;
 
