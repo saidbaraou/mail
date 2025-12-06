@@ -90,7 +90,7 @@ const get_emails = function (mailbox) {
       emailListContainer.appendChild(emailDiv)
 
       //Attached an event listener to each mail to view it when clicked on  
-      emailDiv.addEventListener('click', () => view_email())
+      emailDiv.addEventListener('click', (event) => view_email(event))
     })
 
   })
@@ -103,6 +103,7 @@ const get_emails = function (mailbox) {
 
 function view_email(event) {
   
+console.log('clicked on element with an id of ' + event.currentTarget.dataset.key)
   
 }
 
