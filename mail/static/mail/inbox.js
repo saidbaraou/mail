@@ -13,10 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
   load_mailbox('inbox');
 });
 
+
 function compose_email() {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#single-email-view').style.display = 'none'
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
@@ -25,14 +27,17 @@ function compose_email() {
   document.querySelector('#compose-body').value = '';
 }
 
+
 function load_mailbox(mailbox) {
 
   const emailsView = document.querySelector('#emails-view');
   const composeView = document.querySelector('#compose-view');
+  const singleEmailView = document.querySelector("#single-email-view");
   
   // Show the mailbox and hide other views
   emailsView.style.display = 'block';
   composeView.style.display = 'none';
+  singleEmailView.style.display = 'none';
 
   // Show the mailbox name
   emailsView.innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>
@@ -106,18 +111,36 @@ const get_emails = function (mailbox) {
 
 }
 
+
 function view_email(event) {
   
 const email_id = event.currentTarget.dataset.key
-// console.log('clicked on element with an id of ' + email_id)
+
   fetch(`emails/${email_id}`)
   .then(response => response.json())
   .then(email => {
     console.log(email)
 
-     const emailListContainer = document.querySelector('#email-list-container')
+    const singleEmailView = document.querySelector("#single-email-view")
 
+    singleEmailView.innerHTML = `
+      <p>${email.id}</p>
+      <p>${email?.sender}</p>
+      <p>${email?.recipients}</p>
+      <p>${email?.subject}</p>
+      <p>${email?.timestamp}</p>
+      <p>${email?.body}</p>
+      `
   })
+
+  .catch(error => {
+    console.error('Cannot get the mail:', error)
+  })
+
+   document.querySelector('#emails-view').style.display = 'none';
+   document.querySelector('#single-email-view').style.display = 'block'
+   document.querySelector('#compose-view').style.display = 'none';
+
 }
 
 
