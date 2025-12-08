@@ -114,7 +114,13 @@ const get_emails = function (mailbox) {
 
 function view_email(event) {
   
-console.log('clicked on element with an id of ' + event.currentTarget.dataset.key)
+const email_id = event.currentTarget.dataset.key
+// console.log('clicked on element with an id of ' + email_id)
+  fetch(`emails/${email_id}`)
+  .then(response => response.json())
+  .then(email => {
+    console.log(email)
+  })
   
 }
 
