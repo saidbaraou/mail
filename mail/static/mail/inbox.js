@@ -56,12 +56,6 @@ const get_emails = function (mailbox) {
     //Create the element inside the ASYNC block, to be sure the element had time to be added to the DOM
      const emailListContainer = document.querySelector('#email-list-container');
 
-     //To check the element had arrived
-     if(!emailListContainer){
-      console.log('No list container found');
-      return
-     }
-
     //Checking wether response is an array before looping, displaying a message and stoping the function execution
     if(!Array.isArray(emails) || emails.length == 0) {
       const emptyMessage = document.createElement('p');
@@ -120,8 +114,10 @@ const email_id = event.currentTarget.dataset.key
   .then(response => response.json())
   .then(email => {
     console.log(email)
+
+     const emailListContainer = document.querySelector('#email-list-container')
+
   })
-  
 }
 
 
