@@ -81,6 +81,7 @@ const get_emails = function (mailbox) {
 
       emailDiv.className = 'email-item';
 
+     // Sets the 'From:' or 'To:' label and value based on the mailbox type
       let role;
       const sent_mail = `To : ${allRecipients}`
       const received_mail = `From : ${email.sender}`
