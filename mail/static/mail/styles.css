@@ -9,6 +9,9 @@ textarea {
     cursor: pointer;
 }
 
-/* .read-email-item {
+.read-email-item {
     background-color: #f0f0f0;
-} */
+    padding: .5rem;
+    margin: 1rem 0;
+    cursor: pointer;
+}

@@ -49,6 +49,7 @@ function load_mailbox(mailbox) {
 
 }
 
+
 const get_emails = function (mailbox) {
 
   //fetch emails accordingly to the mailbox requested 
@@ -77,8 +78,9 @@ const get_emails = function (mailbox) {
       emailDiv.setAttribute('data-key', email.id)
 
       const allRecipients = email.recipients.join(', ');
-
-      emailDiv.className = 'email-item';
+      
+     
+      
 
      // Sets the 'From:' or 'To:' label and value based on the mailbox type
       let role;
@@ -91,6 +93,14 @@ const get_emails = function (mailbox) {
         role = sent_mail
       }
 
+      // if(email.read === true){
+      //   emailDiv.className = 'read-email-item';
+      // } else {
+      //   emailDiv.className = 'email-item';
+      // }
+
+      email.read === true ? emailDiv.className = 'read-email-item' : emailDiv.className = 'email-item';
+
       emailDiv.innerHTML = ` 
         <p><strong>${role}</strong></p>
         <p><strong>Subject : ${email.subject}</strong></p>
@@ -100,7 +110,7 @@ const get_emails = function (mailbox) {
       emailListContainer.appendChild(emailDiv)
 
       //Attached an event listener to each mail to view it when clicked on  
-      emailDiv.addEventListener('click', (event) => view_email(event))
+      emailDiv.addEventListener('click', (event) => view_email(event));
     })
 
   })
@@ -116,7 +126,13 @@ function view_email(event) {
   
 const email_id = event.currentTarget.dataset.key
 
-  fetch(`emails/${email_id}`)
+  mark_email_as_read(email_id);
+
+  document.querySelector('#emails-view').style.display = 'none';
+   document.querySelector('#single-email-view').style.display = 'block'
+   document.querySelector('#compose-view').style.display = 'none';
+
+  fetch(`/emails/${email_id}`)
   .then(response => response.json())
   .then(email => {
     console.log(email)
@@ -126,30 +142,24 @@ const email_id = event.currentTarget.dataset.key
     singleEmailView.innerHTML = `
       <p>${email.id}</p>
       <p>${email?.sender}</p>
-      <p>${email?.recipients}</p>
+      <p>${email?.recipients.join(', ')}</p>
       <p>${email?.subject}</p>
       <p>${email?.timestamp}</p>
       <p>${email?.body}</p>
-      `
+      `;
+     
   })
-
   .catch(error => {
     console.error('Cannot get the mail:', error)
   })
-
-   document.querySelector('#emails-view').style.display = 'none';
-   document.querySelector('#single-email-view').style.display = 'block'
-   document.querySelector('#compose-view').style.display = 'none';
-
-  //  mark_as_read(email_id);
-
 }
+
 
 function mark_email_as_read(email_id) {
   fetch(`/emails/${email_id}`, {
     method: 'PUT',
     body: JSON.stringify({
-      read:true
+      read: true
     })
   })
 }
@@ -176,11 +186,9 @@ function send_email(event) {
   .then(response => response.json())
   .then(result => {
     console.log(result);
-    
      load_mailbox('sent');
   })
   .catch(error => {
     console.error('Sending mail failed:', error);
   })
-
 }
