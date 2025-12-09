@@ -141,6 +141,17 @@ const email_id = event.currentTarget.dataset.key
    document.querySelector('#single-email-view').style.display = 'block'
    document.querySelector('#compose-view').style.display = 'none';
 
+  //  mark_as_read(email_id);
+
+}
+
+function mark_email_as_read(email_id) {
+  fetch(`/emails/${email_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      read:true
+    })
+  })
 }
 
 
