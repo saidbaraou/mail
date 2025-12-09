@@ -93,12 +93,6 @@ const get_emails = function (mailbox) {
         role = sent_mail
       }
 
-      // if(email.read === true){
-      //   emailDiv.className = 'read-email-item';
-      // } else {
-      //   emailDiv.className = 'email-item';
-      // }
-
       email.read === true ? emailDiv.className = 'read-email-item' : emailDiv.className = 'email-item';
 
       emailDiv.innerHTML = ` 
