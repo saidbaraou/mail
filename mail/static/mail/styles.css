@@ -3,15 +3,15 @@ textarea {
 }
 
 .email-item {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-bottom: .2rem;
     padding: .5rem;
-    margin: 2rem 0;
     cursor: pointer;
 }
 
 .read-email-item {
     background-color: #f0f0f0;
+    margin-bottom: .2rem;
     padding: .5rem;
-    margin: 1rem 0;
     cursor: pointer;
 }

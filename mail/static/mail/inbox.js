@@ -79,9 +79,6 @@ const get_emails = function (mailbox) {
 
       const allRecipients = email.recipients.join(', ');
       
-     
-      
-
      // Sets the 'From:' or 'To:' label and value based on the mailbox type
       let role;
       const sent_mail = `To : ${allRecipients}`
@@ -96,9 +93,22 @@ const get_emails = function (mailbox) {
       email.read === true ? emailDiv.className = 'read-email-item' : emailDiv.className = 'email-item';
 
       emailDiv.innerHTML = ` 
-        <p><strong>${role}</strong></p>
-        <p><strong>Subject : ${email.subject}</strong></p>
-        <small class='text-secondary'>${email.timestamp}</small>    
+        <div class="email-item-content d-flex p-2 justify-content-between align-items-center">
+          <div class="d-flex align-items-baseline flex-grow-1 overflow-hidden">
+            
+            <p class="mb-0 mr-2 text-truncate">
+                <strong>${role}</strong>
+            </p>
+            
+            <p class="mb-0 text-truncate">
+                ${email.subject}
+            </p>
+          </div>
+        
+          <div>
+              <small class='text-secondary'>${email.timestamp}</small> 
+          </div>
+        </div>
       `;
 
       emailListContainer.appendChild(emailDiv)
