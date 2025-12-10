@@ -134,12 +134,23 @@ const email_id = event.currentTarget.dataset.key
     const singleEmailView = document.querySelector("#single-email-view")
 
     singleEmailView.innerHTML = `
-      <p>${email.id}</p>
-      <p>${email?.sender}</p>
-      <p>${email?.recipients.join(', ')}</p>
-      <p>${email?.subject}</p>
-      <p>${email?.timestamp}</p>
+      <div class = "container">
+      <div class=" mail-header-infos d-flex justify-content-between pt-3 border-bottom">
+      <div class="email-contacts-infos">
+      <p><strong>From : ${email?.sender}</strong></p>
+      <p><strong> To : ${email?.recipients.join(', ')}</strong></p>
+      </div>
+      <div class=" timestamp text-secondary">
+      <small>${email?.timestamp}</small>
+      </div>
+      </div>
+      <div class=" email-subject py-2 border-bottom d-flex >
+      <p class="align-items-center"><strong>subject : ${email?.subject}</strong></p>
+      </div>
+      <div class=" email-body py-3">
       <p>${email?.body}</p>
+      </div>
+      </div>
       `;
      
   })
