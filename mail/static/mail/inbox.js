@@ -44,7 +44,6 @@ function load_mailbox(mailbox) {
   <div id="email-list-container"></div>
   `;
   
-
   get_emails(mailbox);
 
 }
@@ -65,7 +64,7 @@ const get_emails = function (mailbox) {
     //Checking wether response is an array before looping, displaying a message and stoping the function execution
     if(!Array.isArray(emails) || emails.length == 0) {
       const emptyMessage = document.createElement('p');
-      emptyMessage.textContent = `No mail found`;
+      emptyMessage.textContent = `Mailbox is empty`;
       emailListContainer.appendChild(emptyMessage);
       return
     }
@@ -114,7 +113,7 @@ const get_emails = function (mailbox) {
       emailListContainer.appendChild(emailDiv)
 
       //Attached an event listener to each mail to view it when clicked on  
-      emailDiv.addEventListener('click', (event) => view_email(event));
+      emailDiv.addEventListener('click', (event) => view_email(event, mailbox));
     })
 
   })
@@ -126,12 +125,12 @@ const get_emails = function (mailbox) {
 }
 
 
-function view_email(event) {
+function view_email(event, mailbox) {
   
 const email_id = event.currentTarget.dataset.key
 
   mark_email_as_read(email_id);
-
+    
   document.querySelector('#emails-view').style.display = 'none';
    document.querySelector('#single-email-view').style.display = 'block'
    document.querySelector('#compose-view').style.display = 'none';
@@ -140,11 +139,39 @@ const email_id = event.currentTarget.dataset.key
   .then(response => response.json())
   .then(email => {
     console.log(email)
+    console.log(`mailbox is ${mailbox}`)
+
 
     const singleEmailView = document.querySelector("#single-email-view")
 
-    singleEmailView.innerHTML = `
+      if(mailbox === 'inbox') {
+          singleEmailView.innerHTML = `
       <div class = "container">
+      {{request.user.email}}
+      <div class=" mail-header-infos d-flex justify-content-between pt-3 border-bottom">
+      <div class="email-contacts-infos">
+      <p><strong>From : ${email?.sender}</strong></p>
+      <p><strong> To : ${email?.recipients.join(', ')}</strong></p>
+      </div>
+      <div class=" timestamp text-secondary">
+      <small>${email?.timestamp}</small>
+      </div>
+      </div>
+      <div class=" email-subject py-2 border-bottom d-flex >
+      <p class="align-items-center"><strong>subject : ${email?.subject}</strong></p>
+      </div>
+      <div class=" email-body py-3">
+      <p>${email?.body}</p>
+      </div>
+      <div class="archive-unarchive">
+      <button>${email.archived ? 'Unarchive' : 'Archive'}</button>
+      </div>
+      </div>
+      `;
+      } else if (mailbox === 'sent') {
+          singleEmailView.innerHTML = `
+      <div class = "container">
+      {{request.user.email}}
       <div class=" mail-header-infos d-flex justify-content-between pt-3 border-bottom">
       <div class="email-contacts-infos">
       <p><strong>From : ${email?.sender}</strong></p>
@@ -162,7 +189,8 @@ const email_id = event.currentTarget.dataset.key
       </div>
       </div>
       `;
-     
+      }
+  
   })
   .catch(error => {
     console.error('Cannot get the mail:', error)
