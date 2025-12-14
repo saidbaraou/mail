@@ -164,7 +164,7 @@ const email_id = event.currentTarget.dataset.key
       <p>${email?.body}</p>
       </div>
       <div class="archive-unarchive">
-      <button>${email.archived ? 'Unarchive' : 'Archive'}</button>
+      <button class="btn btn-sm btn-outline-primary" >${email.archived ? 'Unarchive' : 'Archive'}</button>
       </div>
       </div>
       `;
