@@ -139,19 +139,15 @@ const email_id = event.currentTarget.dataset.key
   .then(response => response.json())
   .then(email => {
     console.log(email)
-    console.log(`mailbox is ${mailbox}`)
-
 
     const singleEmailView = document.querySelector("#single-email-view")
 
     //Display different email view according to the mailbox
 
+      
+
       if(mailbox === 'inbox') {
-        
-        const archiveUnarchiveButton = document.querySelector('#archive-unarchive');
-
-       archiveUnarchiveButton.addEventListener('click', () => archive_unarchive_email(email.id));
-
+              
           singleEmailView.innerHTML = `
       <div class = "container">
       {{request.user.email}}
@@ -171,14 +167,17 @@ const email_id = event.currentTarget.dataset.key
       <p>${email?.body}</p>
       </div>
       <div class="archive-unarchive">
-       <button id="archive-unarchive" class="btn btn-sm btn-outline-primary" >${email.archived ? 'Unarchive' : 'Archive'}</button>
+       <button id="archive-unarchive" class="btn btn-sm btn-outline-primary" >Archive</button>
       </div>
       </div>
       `;
+      const archiveUnarchiveButton = document.querySelector('#archive-unarchive');
+      archiveUnarchiveButton.addEventListener('click', () => archive_unarchive_email(email.id));
+
       } else if (mailbox === 'sent') {
           singleEmailView.innerHTML = `
       <div class = "container">
-      {{request.user.email}}
+      
       <div class=" mail-header-infos d-flex justify-content-between pt-3 border-bottom">
       <div class="email-contacts-infos">
       <p><strong>From : ${email?.sender}</strong></p>
@@ -196,7 +195,7 @@ const email_id = event.currentTarget.dataset.key
       </div>
       </div>
       `;
-      }
+      } 
   
   })
   .catch(error => {
