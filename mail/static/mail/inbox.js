@@ -144,7 +144,14 @@ const email_id = event.currentTarget.dataset.key
 
     const singleEmailView = document.querySelector("#single-email-view")
 
+    //Display different email view according to the mailbox
+
       if(mailbox === 'inbox') {
+        
+        const archiveUnarchiveButton = document.querySelector('#archive-unarchive');
+
+       archiveUnarchiveButton.addEventListener('click', () => archive_unarchive_email(email.id));
+
           singleEmailView.innerHTML = `
       <div class = "container">
       {{request.user.email}}
@@ -164,7 +171,7 @@ const email_id = event.currentTarget.dataset.key
       <p>${email?.body}</p>
       </div>
       <div class="archive-unarchive">
-      <button class="btn btn-sm btn-outline-primary" >${email.archived ? 'Unarchive' : 'Archive'}</button>
+       <button id="archive-unarchive" class="btn btn-sm btn-outline-primary" >${email.archived ? 'Unarchive' : 'Archive'}</button>
       </div>
       </div>
       `;
@@ -207,6 +214,16 @@ function mark_email_as_read(email_id) {
   })
 }
 
+function archive_unarchive_email(email_id) {
+  fetch(`/emails/${email_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      archived: true
+    })
+  }),
+  console.log(email.id)
+}
+ 
 
 function send_email(event) {
 
