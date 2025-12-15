@@ -83,7 +83,7 @@ const get_emails = function (mailbox) {
       const sent_mail = `To : ${allRecipients}`
       const received_mail = `From : ${email.sender}`
 
-      if (mailbox === 'inbox') {
+      if (mailbox === 'inbox' || mailbox === 'archive') {
         role = received_mail;
       } else if (mailbox === 'sent') {
         role = sent_mail
@@ -128,8 +128,6 @@ const get_emails = function (mailbox) {
 function view_email(event, mailbox) {
   
 const email_id = event.currentTarget.dataset.key
-
-  mark_email_as_read(email_id);
     
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#single-email-view').style.display = 'block'
@@ -139,6 +137,11 @@ const email_id = event.currentTarget.dataset.key
   .then(response => response.json())
   .then(email => {
     console.log(email)
+
+    // Only call the function if the email is NOT already read.
+        if (!email.read) {
+            mark_email_as_read(email.id);
+        }
 
     const singleEmailView = document.querySelector("#single-email-view")
 
