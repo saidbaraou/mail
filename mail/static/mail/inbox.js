@@ -132,8 +132,8 @@ const email_id = event.currentTarget.dataset.key
   mark_email_as_read(email_id);
     
   document.querySelector('#emails-view').style.display = 'none';
-   document.querySelector('#single-email-view').style.display = 'block'
-   document.querySelector('#compose-view').style.display = 'none';
+  document.querySelector('#single-email-view').style.display = 'block'
+  document.querySelector('#compose-view').style.display = 'none';
 
   fetch(`/emails/${email_id}`)
   .then(response => response.json())
@@ -144,13 +144,11 @@ const email_id = event.currentTarget.dataset.key
 
     //Display different email view according to the mailbox
 
-      
-
       if(mailbox === 'inbox') {
               
           singleEmailView.innerHTML = `
       <div class = "container">
-      {{request.user.email}}
+      
       <div class=" mail-header-infos d-flex justify-content-between pt-3 border-bottom">
       <div class="email-contacts-infos">
       <p><strong>From : ${email?.sender}</strong></p>
@@ -171,8 +169,8 @@ const email_id = event.currentTarget.dataset.key
       </div>
       </div>
       `;
-      const archiveUnarchiveButton = document.querySelector('#archive-unarchive');
-      archiveUnarchiveButton.addEventListener('click', () => archive_unarchive_email(email.id));
+      const archiveButton = document.querySelector('#archive-unarchive');
+      archiveButton.addEventListener('click', () => archive_email(email.id));
 
       } else if (mailbox === 'sent') {
           singleEmailView.innerHTML = `
@@ -195,7 +193,33 @@ const email_id = event.currentTarget.dataset.key
       </div>
       </div>
       `;
-      } 
+      } else if (mailbox === 'archive') {
+          singleEmailView.innerHTML = `
+      <div class = "container">
+      
+      <div class=" mail-header-infos d-flex justify-content-between pt-3 border-bottom">
+      <div class="email-contacts-infos">
+      <p><strong>From : ${email?.sender}</strong></p>
+      <p><strong> To : ${email?.recipients.join(', ')}</strong></p>
+      </div>
+      <div class=" timestamp text-secondary">
+      <small>${email?.timestamp}</small>
+      </div>
+      </div>
+      <div class=" email-subject py-2 border-bottom d-flex >
+      <p class="align-items-center"><strong>subject : ${email?.subject}</strong></p>
+      </div>
+      <div class=" email-body py-3">
+      <p>${email?.body}</p>
+      </div>
+      <div class="archive-unarchive">
+       <button id="archive-unarchive" class="btn btn-sm btn-outline-primary" >Unarchive</button>
+      </div>
+      </div>
+      `;
+      const unarchiveButton = document.querySelector('#archive-unarchive');
+      unarchiveButton.addEventListener('click', () => unarchive_email(email.id));
+      }
   
   })
   .catch(error => {
@@ -213,14 +237,30 @@ function mark_email_as_read(email_id) {
   })
 }
 
-function archive_unarchive_email(email_id) {
+
+function archive_email(email_id) {
   fetch(`/emails/${email_id}`, {
     method: 'PUT',
     body: JSON.stringify({
       archived: true
     })
-  }),
-  console.log(email.id)
+  })
+  .then(() => {
+    load_mailbox('inbox');
+  }) 
+}
+
+
+function unarchive_email(email_id) {
+  fetch(`/emails/${email_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      archived: false
+    })
+  })
+  .then(() => {
+    load_mailbox('inbox');
+  })
 }
  
 
