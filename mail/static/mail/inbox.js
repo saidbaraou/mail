@@ -151,29 +151,36 @@ const email_id = event.currentTarget.dataset.key
               
           singleEmailView.innerHTML = `
       <div class = "container">
-      
-      <div class=" mail-header-infos d-flex justify-content-between pt-3 border-bottom">
-      <div class="email-contacts-infos">
-      <p><strong>From : ${email?.sender}</strong></p>
-      <p><strong> To : ${email?.recipients.join(', ')}</strong></p>
-      </div>
-      <div class=" timestamp text-secondary">
-      <small>${email?.timestamp}</small>
-      </div>
-      </div>
+        <div class=" mail-header-infos d-flex justify-content-between pt-3 border-bottom">
+          <div class="email-contacts-infos">
+          <p><strong>From : ${email?.sender}</strong></p>
+          <p><strong> To : ${email?.recipients.join(', ')}</strong></p>
+          </div>
+          <div class=" timestamp text-secondary">
+          <small>${email?.timestamp}</small>
+          </div>
+        </div>
       <div class=" email-subject py-2 border-bottom d-flex >
       <p class="align-items-center"><strong>subject : ${email?.subject}</strong></p>
       </div>
       <div class=" email-body py-3">
       <p>${email?.body}</p>
       </div>
+      <div class="d-flex justify-content-between mt-5">
       <div class="archive-unarchive">
        <button id="archive-unarchive" class="btn btn-sm btn-outline-primary" >Archive</button>
+      </div>
+      <div class="reply">
+       <button id="reply" class="btn btn-sm btn-outline-primary  px-8" >Reply</button>
+      </div>
       </div>
       </div>
       `;
       const archiveButton = document.querySelector('#archive-unarchive');
       archiveButton.addEventListener('click', () => archive_email(email.id));
+
+      const replyButton = document.querySelector('#reply-button');
+      replyButton.addEventListener('click', () => compose_email());
 
       } else if (mailbox === 'sent') {
           singleEmailView.innerHTML = `
