@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
 function compose_email() {
 
   // Show compose view and hide other views
@@ -25,6 +27,7 @@ function compose_email() {
   document.querySelector('#compose-recipients').value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
+
 }
 
 
