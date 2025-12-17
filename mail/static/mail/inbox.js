@@ -1,5 +1,7 @@
-document.addEventListener('DOMContentLoaded', function() {
+console.log('inbox.js loaded');
 
+document.addEventListener('DOMContentLoaded', function() {
+console.log('DOM fully loaded and parsed');
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
@@ -22,6 +24,16 @@ function compose_email() {
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#single-email-view').style.display = 'none'
   document.querySelector('#compose-view').style.display = 'block';
+
+  if (arguments.length > 0) {
+    const recipients = arguments[0];
+    const subject = arguments[1];
+    const body = arguments[2];
+    document.querySelector('#compose-recipients').value = recipients;
+    document.querySelector('#compose-subject').value = subject;
+    document.querySelector('#compose-body').value = body;
+    return
+  }
 
   // Clear out composition fields
   document.querySelector('#compose-recipients').value = '';
@@ -174,7 +186,7 @@ const email_id = event.currentTarget.dataset.key
        <button id="archive-unarchive" class="btn btn-sm btn-outline-primary" >Archive</button>
       </div>
       <div class="reply">
-       <button id="reply" class="btn btn-sm btn-outline-primary  px-8" >Reply</button>
+       <button id="reply-btn" class="btn btn-sm btn-outline-primary  px-8" >Reply</button>
       </div>
       </div>
       </div>
@@ -182,8 +194,8 @@ const email_id = event.currentTarget.dataset.key
       const archiveButton = document.querySelector('#archive-unarchive');
       archiveButton.addEventListener('click', () => archive_email(email.id));
 
-      const replyButton = document.querySelector('#reply-button');
-      replyButton.addEventListener('click', () => compose_email());
+      const replyBtn = document.querySelector('#reply-btn');
+      replyBtn.addEventListener('click', () => compose_email(recipients=email.sender, subject=`Re: ${email.subject}`, body=`\n\n\nOn ${email.timestamp} ${email.sender} wrote:\n\n${email.body}`));
 
       } else if (mailbox === 'sent') {
           singleEmailView.innerHTML = `
@@ -304,3 +316,4 @@ function send_email(event) {
     console.error('Sending mail failed:', error);
   })
 }
+
