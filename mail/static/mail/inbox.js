@@ -1,12 +1,9 @@
-console.log('inbox.js loaded');
-
 document.addEventListener('DOMContentLoaded', function() {
-console.log('DOM fully loaded and parsed');
   // Use buttons to toggle between views
   document.querySelector('#inbox').addEventListener('click', () => load_mailbox('inbox'));
   document.querySelector('#sent').addEventListener('click', () => load_mailbox('sent'));
   document.querySelector('#archived').addEventListener('click', () => load_mailbox('archive'));
-  document.querySelector('#compose').addEventListener('click', compose_email);
+  document.querySelector('#compose').addEventListener('click', () => compose_email());
 
   // Use button to send mail
   document.querySelector('#compose-form').addEventListener('submit', send_email);
@@ -18,29 +15,20 @@ console.log('DOM fully loaded and parsed');
 
 
 
-function compose_email() {
+function compose_email(recipients='', subject='', body='') {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
   document.querySelector('#single-email-view').style.display = 'none'
   document.querySelector('#compose-view').style.display = 'block';
 
-  if (arguments.length > 0) {
-    const recipients = arguments[0];
-    const subject = arguments[1];
-    const body = arguments[2];
-    document.querySelector('#compose-recipients').value = recipients;
-    document.querySelector('#compose-subject').value = subject;
-    document.querySelector('#compose-body').value = body;
-    return
-  }
+     
+  // Populate the fields with provided arguments
+  document.querySelector('#compose-recipients').value = recipients;
+  document.querySelector('#compose-subject').value = subject;
+  document.querySelector('#compose-body').value = body;
 
-  // Clear out composition fields
-  document.querySelector('#compose-recipients').value = '';
-  document.querySelector('#compose-subject').value = '';
-  document.querySelector('#compose-body').value = '';
-
-}
+    }
 
 
 function load_mailbox(mailbox) {
@@ -195,7 +183,7 @@ const email_id = event.currentTarget.dataset.key
       archiveButton.addEventListener('click', () => archive_email(email.id));
 
       const replyBtn = document.querySelector('#reply-btn');
-      replyBtn.addEventListener('click', () => compose_email(recipients=email.sender, subject=`Re: ${email.subject}`, body=`\n\n\nOn ${email.timestamp} ${email.sender} wrote:\n\n${email.body}`));
+      replyBtn.addEventListener('click', () => compose_email(recipients=email?.sender, subject=`Re: ${email?.subject}`, body=`\n\n\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`));
 
       } else if (mailbox === 'sent') {
           singleEmailView.innerHTML = `
