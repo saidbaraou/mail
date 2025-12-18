@@ -183,7 +183,10 @@ const email_id = event.currentTarget.dataset.key
       archiveButton.addEventListener('click', () => archive_email(email.id));
 
       const replyBtn = document.querySelector('#reply-btn');
-      replyBtn.addEventListener('click', () => compose_email(recipients=email?.sender, subject=`Re: ${email?.subject}`, body=`\n\n\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`));
+      replyBtn.addEventListener('click', () => compose_email(
+        recipients=email?.sender, 
+        subject = email?.subject.startsWith('Re:') ? email?.subject : subject=`Re: ${email?.subject}`, 
+        body=`\n\n\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`));
 
       } else if (mailbox === 'sent') {
           singleEmailView.innerHTML = `
