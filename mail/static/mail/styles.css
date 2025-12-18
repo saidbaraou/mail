@@ -15,3 +15,7 @@ textarea {
     padding: .5rem;
     cursor: pointer;
 }
+
+.email-body {
+    white-space: pre-wrap;
+}

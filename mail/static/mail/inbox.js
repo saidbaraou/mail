@@ -166,7 +166,7 @@ const email_id = event.currentTarget.dataset.key
       <div class=" email-subject py-2 border-bottom d-flex >
       <p class="align-items-center"><strong>subject : ${email?.subject}</strong></p>
       </div>
-      <div class=" email-body py-3">
+      <div class="email-body py-3">
       <p>${email?.body}</p>
       </div>
       <div class="d-flex justify-content-between mt-5">
@@ -186,7 +186,7 @@ const email_id = event.currentTarget.dataset.key
       replyBtn.addEventListener('click', () => compose_email(
         recipients=email?.sender, 
         subject = email?.subject.startsWith('Re:') ? email?.subject : subject=`Re: ${email?.subject}`, 
-        body=`\n\n\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`));
+        body=`\n\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`));
 
       } else if (mailbox === 'sent') {
           singleEmailView.innerHTML = `
