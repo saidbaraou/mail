@@ -166,7 +166,7 @@ const email_id = event.currentTarget.dataset.key
       <div class=" email-subject py-2 border-bottom d-flex >
       <p class="align-items-center"><strong>subject : ${email?.subject}</strong></p>
       </div>
-      <div class="email-body py-3">
+      <div class="email-body">
       <p>${email?.body}</p>
       </div>
       <div class="d-flex justify-content-between mt-5">
@@ -183,10 +183,12 @@ const email_id = event.currentTarget.dataset.key
       archiveButton.addEventListener('click', () => archive_email(email.id));
 
       const replyBtn = document.querySelector('#reply-btn');
-      replyBtn.addEventListener('click', () => compose_email(
-        recipients=email?.sender, 
-        subject = email?.subject.startsWith('Re:') ? email?.subject : subject=`Re: ${email?.subject}`, 
-        body=`\n\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`));
+      replyBtn.addEventListener('click', () => {
+        const recipients = email?.sender;
+        const subject = email?.subject.startsWith('Re:') ? email?.subject : `Re: ${email?.subject}`;
+        const body = `\n\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`;
+        compose_email(recipients, subject, body);
+      });
 
       } else if (mailbox === 'sent') {
           singleEmailView.innerHTML = `
