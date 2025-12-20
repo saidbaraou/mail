@@ -186,7 +186,7 @@ const email_id = event.currentTarget.dataset.key
       replyBtn.addEventListener('click', () => {
         const recipients = email?.sender;
         const subject = email?.subject.startsWith('Re:') ? email?.subject : `Re: ${email?.subject}`;
-        const body = `\n\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`;
+        const body = `\n---------------------------------\nOn ${email?.timestamp} ${email?.sender} wrote:\n\n${email?.body}`;
         compose_email(recipients, subject, body);
       });
 
@@ -206,7 +206,7 @@ const email_id = event.currentTarget.dataset.key
       <div class=" email-subject py-2 border-bottom d-flex >
       <p class="align-items-center"><strong>subject : ${email?.subject}</strong></p>
       </div>
-      <div class=" email-body py-3">
+      <div class=" email-body">
       <p>${email?.body}</p>
       </div>
       </div>
@@ -227,7 +227,7 @@ const email_id = event.currentTarget.dataset.key
       <div class=" email-subject py-2 border-bottom d-flex >
       <p class="align-items-center"><strong>subject : ${email?.subject}</strong></p>
       </div>
-      <div class=" email-body py-3">
+      <div class=" email-body">
       <p>${email?.body}</p>
       </div>
       <div class="archive-unarchive">
