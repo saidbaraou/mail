@@ -4,12 +4,29 @@
 {% block body %}
 <h2>{{ request.user.email }}</h2>
 
-<button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
-<button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
-<button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
-<button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
-<a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
-<hr>
+<nav id="navigation-menu" class="d-flex flex-row flex-nowrap overflow-auto py-3 mb-4 border-bottom">
+
+    <button class="btn btn-outline-primary d-flex align-items-center mr-2" id="inbox">
+        <span class="material-symbols-outlined mr-1">inbox</span> Inbox
+    </button>
+
+    <button class="btn btn-outline-primary d-flex align-items-center mr-2" id="compose">
+        <span class="material-symbols-outlined mr-1">edit_note</span> Compose
+    </button>
+
+    <button class="btn btn-outline-primary d-flex align-items-center mr-2" id="sent">
+        <span class="material-symbols-outlined mr-1">send</span> Sent
+    </button>
+
+    <button class="btn btn-outline-primary d-flex align-items-center mr-2" id="archived">
+        <span class="material-symbols-outlined mr-1">archive</span> Archived
+    </button>
+
+    <a class="btn btn-outline-danger d-flex align-items-center ml-auto" href="{% url 'logout' %}">
+        <span class="material-symbols-outlined mr-1">logout</span> Log Out
+    </a>
+
+</nav>
 
 <div id="emails-view">
 

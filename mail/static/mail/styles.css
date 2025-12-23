@@ -19,3 +19,29 @@ textarea {
 .email-body {
     white-space: pre-wrap;
 }
+
+/* Make buttons pill-shaped */
+#navigation-menu .btn {
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+/* Ensure icons match text size and alignment */
+.material-symbols-outlined {
+    font-size: 20px;
+    /* This prevents the icon from pushing the button height up */
+    line-height: 1; 
+}
+
+/* Hide scrollbar but allow scrolling if screen is too narrow */
+#navigation-menu {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+#navigation-menu::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}

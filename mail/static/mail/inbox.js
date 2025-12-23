@@ -33,6 +33,19 @@ function compose_email(recipients='', subject='', body='') {
 
 function load_mailbox(mailbox) {
 
+  // Remove 'active' and 'btn-primary' from all, reset to 'btn-outline-primary'
+  document.querySelectorAll('#navigation-menu .btn').forEach(btn => {
+      btn.classList.remove('active', 'btn-primary');
+      btn.classList.add('btn-outline-primary');
+  });
+
+  // Make the current mailbox button solid
+  const activeBtn = document.querySelector(`#${mailbox}`);
+  if (activeBtn) {
+      activeBtn.classList.remove('btn-outline-primary');
+      activeBtn.classList.add('btn-primary', 'active');
+  }
+
   const emailsView = document.querySelector('#emails-view');
   const composeView = document.querySelector('#compose-view');
   const singleEmailView = document.querySelector("#single-email-view");
