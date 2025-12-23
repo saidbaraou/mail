@@ -20,6 +20,10 @@ textarea {
     white-space: pre-wrap;
 }
 
+#emails-view {
+     margin-bottom: 3rem;
+}
+
 /* Make buttons pill-shaped */
 #navigation-menu .btn {
     border-radius: 20px;
